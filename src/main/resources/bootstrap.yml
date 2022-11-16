@@ -1,0 +1,135 @@
+server:
+  port: 8989
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:6761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    status-page-url: http://${eureka.instance.hostname}:${server.port}/swagger-ui.html
+management:
+  security:
+    enabled: false
+security:
+  basic:
+    enabled: false
+logging:
+  level:
+    org.zalando.logbook: TRACE
+  pattern:
+    console: "[%d{dd/MM/yyyy HH:mm:ss,SSS}] %m%n"
+    file: "[%d{dd/MM/yyyy HH:mm:ss,SSS}] %m%n"
+
+zuul:
+  ignoredPatterns:
+    - /sso/login/**
+    - /sso/signup/**
+    - /sso/verify/**
+    - /sso/password/**
+  routes:
+    api-category:
+      path: /api/category/**
+      serviceId: vks-category
+    api-auth:
+      path: /api/sso/**
+      serviceId: vks-sso
+    api-core:
+      path: /api/core/**
+      serviceId: vks-core
+    api-report:
+      path: /api/report/**
+      serviceId: vks-report
+    api-manage:
+      path: /api/manage/**
+      serviceId: vks-manage
+    api-notification:
+      path: /api/notification/**
+      serviceId: vks-notification
+    api-sothuly:
+      path: /api/sothuly/**
+      serviceId: vks-sothuly
+    api-quanlyan:
+      path: /api/quanlyan/**
+      serviceId: vks-quanlyan
+    api-qlahs:
+      path: /api/qlahs/**
+      serviceId: vks-qlahs
+  host:
+    connect-timeout-millis: 200000
+    socket-timeout-millis: 200000
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Access-Control-Allow-Headers, Access-Control-Allow-Methods
+
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 350000
+  ConnectTimeout: 50000
+  maxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  OkToRetryOnAllOperations: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 1200000
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - OPTIONS
+  session:
+    store-type: none
+  profiles:
+    active: default
+  application:
+    name: vks-gateway
+  datasource:
+#    url: "jdbc:oracle:thin:@45.122.253.178:2151:cdb241"
+    url: "jdbc:oracle:thin:@192.168.1.241:1521:cdb241"
+#    url: "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(LOAD_BALANCE=on)(FAILOVER=on)(ADDRESS=(PROTOCOL=TCP)(HOST=10.47.104.247)(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST=10.47.104.248)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=vksdb)))"
+    username: spp_sso
+    password: Ab123456
+    driver-class-name: oracle.jdbc.OracleDriver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 4
+      max-lifetime: 1800000
+      maximum-pool-size: 20
+      connection-timeout: 60000
+      pool-name: ${spring.application.name}
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.Oracle10gDialect"
+        format_sql: true
+
+  #Redis configurations
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+        timeout: 0
+  mvc:
+    dispatch-options-request: false

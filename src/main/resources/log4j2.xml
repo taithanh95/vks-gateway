@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            [%d{dd/MM/yyyy HH:mm:ss,SSS}] %m%n
+        </Property>
+        <property name="app.name">${bundle:application:name}/</property>
+        <property name="log.file.path">/data/logs/</property>
+    </Properties>
+
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="logbook" fileName="${log.file.path}/${app.name}/logbook/logbook.log"
+                     filePattern="${log.file.path}/${app.name}/logbook/logbook-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="application" fileName="${log.file.path}/${app.name}/application/application.log"
+                     filePattern="${log.file.path}/${app.name}/application/application-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="controller" fileName="${log.file.path}/${app.name}/controller/controller.log"
+                     filePattern="${log.file.path}/${app.name}/controller/controller-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="job" fileName="${log.file.path}/${app.name}/job/job.log"
+                     filePattern="${log.file.path}/${app.name}/job/job-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="thread" fileName="${log.file.path}/${app.name}/thread/thread.log"
+                     filePattern="${log.file.path}/${app.name}/thread/thread-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="service" fileName="${log.file.path}/${app.name}/service/service.log"
+                     filePattern="${log.file.path}/${app.name}/service/service-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="supplier" fileName="${log.file.path}/${app.name}/supplier/supplier.log"
+                     filePattern="${log.file.path}/${app.name}/supplier/supplier-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.zalando.logbook" level="trace" additivity="false">
+            <AppenderRef ref="logbook"/>
+        </Logger>
+        <Logger name="application" level="info" additivity="false">
+            <AppenderRef ref="application"/>
+        </Logger>
+        <Logger name="controller" level="info" additivity="false">
+            <AppenderRef ref="controller"/>
+        </Logger>
+        <Logger name="job" level="info" additivity="false">
+            <AppenderRef ref="job"/>
+        </Logger>
+        <Logger name="thread" level="info" additivity="false">
+            <AppenderRef ref="thread"/>
+        </Logger>
+        <Logger name="service" level="info" additivity="false">
+            <AppenderRef ref="service"/>
+        </Logger>
+        <Logger name="supplier" level="info" additivity="false">
+            <AppenderRef ref="supplier"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
